@@ -1,0 +1,110 @@
+CREATE TYPE Gender AS enum('Male,''Female');
+CREATE TYPE FamilyStatus AS enum('Single','Married','Divorced','Widow','Separated','Other');
+CREATE TYPE HouseType as enum('House','Apartment');
+
+
+CREATE TABLE addresses(id SERIAL PRIMARY KEY ,
+                       city VARCHAR,
+                       region varchar,
+                       street varchar);
+
+create table customers(id serial primary key ,
+                       first_name varchar,
+                       last_name varchar,
+                       email varchar,
+                       date_of_birth varchar,
+                       Gender gender,
+                       nationality varchar,
+                       family_status FamilyStatus);
+
+create table agencies(id SERIAL PRIMARY KEY ,
+                    name varchar,
+                    phone_number varchar,
+                    address_id integer references addresses(id));
+
+
+
+create  table rent_info(owner_id integer references owners(id) ,
+                        customer_id integer references customers(id),
+                        agency_id integer references agencies(id),
+                        house_id integer references houses(id));
+
+
+create table owners(id SERIAL PRIMARY KEY ,
+                    name varchar,
+                    last_name varchar,
+                    email varchar,
+                    date_of_birth date,
+                    Gender gender);
+
+create table  houses(id SERIAL PRIMARY KEY ,
+                     price numeric,
+                     rating float,
+                     description  text,
+                     room int, furniture boolean,address_id
+                     integer references addresses(id),
+                     house_id integer references owners(id));
+
+alter table agencies alter column  name set  not null;
+--alter table agencies add constraint check_number like'+996%' and (phone_namber length)=9;
+alter table rent_info add column check_aut date ;
+alter table owners add constraint  b unique (email);
+alter table customers add  constraint  un unique (email);
+alter type FamilyStatus rename to MaritalStatus;
+alter table  customers rename  column  family_status to marital_status;
+
+insert into customers (first_name, last_name, email, date_of_birth, gender, nationality, marital_status) values ('Serene', 'Roggerone', 'srogjjgeronej@shop-pro.jp', '1988-06-13', 'Female', 'French', 'Married');
+insert into customers (first_name, last_name, email, date_of_birth, gender, nationality, marital_status) values ('Rafaellle', 'Hannent', 'rhannentk@miitbeian.gov.cn', '1974-10-14', 'Male', 'Icelandic', 'Single');
+insert into customers (first_name, last_name, email, date_of_birth, gender, nationality, marital_status) values ('Aveline', 'Aslum', 'aasluml@w3.org', '1994-12-23', 'Female', 'Kurdish', 'Single');
+insert into customers (first_name, last_name, email, date_of_birth, gender, nationality, marital_status) values ('Gloria', 'Powrie', 'gpowriem@msn.com', '1986-11-19', 'Female', 'Malay', 'Widow');
+insert into customers (first_name, last_name, email, date_of_birth, gender, nationality, marital_status) values ('Tilek', 'Adam', 'tcrimminsn@google.co.uk', '1990-01-18', 'Male', 'Kyrgyz', 'Single');
+insert into customers (first_name, last_name, email, date_of_birth, gender, nationality, marital_status) values ('Felike', 'Jurisic', 'fjurisico@joomla.org', '1994-08-24', 'Male', 'Guaraní', 'Married');
+insert into customers (first_name, last_name, email, date_of_birth, gender, nationality, marital_status) values ('Kailey', 'Gate', 'kgatep@lycos.com', '1987-04-21', 'Female', 'Malayalam', 'Widow');
+insert into customers (first_name, last_name, email, date_of_birth, gender, nationality, marital_status) values ('Ronna', 'Genge', 'rgengeq@admin.ch', '1982-01-04', 'Female', 'Thai', 'Single');
+insert into customers (first_name, last_name, email, date_of_birth, gender, nationality, marital_status) values ('Hamish', 'Flisher', 'hflisherr@webnode.com', '1982-10-08', 'Male', 'Icelandic', 'Divorced');
+insert into customers (first_name, last_name, email, date_of_birth, gender, nationality, marital_status) values ('Trula', 'Gheraldi', 'tgheraldis@paginegialle.it', '1988-01-06', 'Female', 'Malayalam', 'Divorced');
+insert into customers (first_name, last_name, email, date_of_birth, gender, nationality, marital_status) values ('Fran', 'Olander', 'folandert@nsw.gov.au', '1974-11-14', 'Male', 'Indonesian', 'Married');
+insert into customers (first_name, last_name, email, date_of_birth, gender, nationality, marital_status) values ('Arlana', 'Glass', 'aglassu@stanford.edu', '1983-10-30', 'Female', 'Bosnian', 'Single');
+insert into customers (first_name, last_name, email, date_of_birth, gender, nationality, marital_status) values ('Esma', 'Doerr', 'edoerrv@51.la', '1983-06-13', 'Female', 'English', 'Married');
+insert into customers (first_name, last_name, email, date_of_birth, gender, nationality, marital_status) values ('Rhiamon', 'MacLaig', 'rmaclaigw@feedburner.com', '1992-07-19', 'Female', 'Hebrew', 'Single');
+insert into customers (first_name, last_name, email, date_of_birth, gender, nationality, marital_status) values ('Hunt', 'Minchinton', 'hminchintonx@mac.com', '1969-09-26', 'Male', 'German', 'Single');
+insert into customers (first_name, last_name, email, date_of_birth, gender, nationality, marital_status) values ('Kamila', 'Armanova', 'kama@aboutads.info', '1994-02-02', 'Female', 'Kyrgyz', 'Single');
+insert into customers (first_name, last_name, email, date_of_birth, gender, nationality, marital_status) values ('Berne', 'Armall', 'barmallz@e-recht24.de', '1980-09-28', 'Male', 'Belarusian', 'Widow');
+insert into customers (first_name, last_name, email, date_of_birth, gender, nationality, marital_status) values ('Crista', 'Skeene', 'cskeene10@hp.com', '1970-01-25', 'Female', 'Gujarati', 'Single');
+insert into customers (first_name, last_name, email, date_of_birth, gender, nationality, marital_status) values ('Fernanda', 'Bullen', 'fbullen11@abc.net.au', '1966-12-14', 'Female', 'Bosnian', 'Divorced');
+insert into customers (first_name, last_name, email, date_of_birth, gender, nationality, marital_status) values ('Malika', 'Alikova', 'malika@last.fm', '1988-02-22', 'Female', 'Kyrgyz', 'Married');
+
+--Запросы:
+--1. Owner_лердин аттарынын арасынан эн коп символ камтыган owner_ди жана анын уйун(House) чыгар.
+
+-- 2. Уйлордун баалары 1500, 2000 дин аралыгында бар болсо true чыгар, жок болсо false чыгар.
+SELECT CASE  WHEN price BETWEEN 1500 AND 2000 THEN 'true'  ELSE 'false'  END AS price_range_status FROM houses;
+-- 3. id_лери 5, 6, 7, 8, 9, 10 го барабар болгон адресстерди жана ал адрессте кайсы уйлор бар экенин чыгар.
+
+-- 4. Бардык уйлорду, уйдун ээсинин атын, клиенттин атын, агенттин атын чыгар.
+
+
+-- 5. Клиенттердин 10-катарынан баштап 1999-жылдан кийин туулган 15 клиентти чыгар.
+-- 6. Рейтинги боюнча уйлорду сорттоп, уйлордун тайптарын, рейтингин жана уйдун ээлерин чыгар. (asc and desc)
+-- 7. Уйлордун арасынан квартиралардын (apartment) санын жана алардын баасынын суммасын чыгар.
+-- 8. Агентсволардын арасынан аты ‘My_House’ болгон агентсвоны, агентсвонын адресин жана анын бардык уйлорун, уйлордун        адрессин чыгар.
+-- 9. Уйлордун арасынан мебели бар уйлорду, уйдун ээсин жана уйдун адрессин чыгар.
+-- 10.Кленти жок уйлордун баарын жана анын адрессин жана ал уйлор кайсыл агентсвога тийешелуу экенин чыгар.
+-- 11.Клиенттердин улутуна карап, улутуну жана ал улуутта канча клиент жашайт санын чыгар.
+-- 12.Уйлордун арасынан рейтингтери чон, кичине, орточо болгон 3 уйду чыгар.
+-- 13.Уйлору жок киленттерди, клиенттери жок уйлорду чыгар.
+-- 14.Уйлордун бааларынын орточо суммасын чыгар.
+-- 15.‘A’ тамга менен башталган уйдун ээсинин аттарын, клиенттердин аттарын чыгар.
+-- 16.Эн уйу коп owner_ди жана анын уйлорунун санын чыгар.
+-- 17.Улуту Kyrgyzstan уй-булолу customerлерди чыгарыныз.
+-- 18.Эн коп болмолуу уйду жана анын адресин ал уй кайсыл ownerге таандык ошону чыгарыныз.
+-- 19.Бишкекте жайгашкан уйлорду жана клиентерин кошо чыгарыныз.
+-- 20.Жендерине карап группировка кылыныз.
+-- 21.Эн коп моонотко ижарага алынган уйду чыгарыныз.
+-- 22.Эн кымбат уйду жана анын ээсин чыгарыныз.
+-- 23.Бир региондо жайгашкан баардык агентстволорду чыгарыныз
+-- 24.Рейтинг боюнча эн популярдуу 5 уйду чыгар.
+-- 25.Орто жаштагы owner_ди , анын уйун , уйдун адрессин чыгар.
+
+
+
